@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myspring.bookshop.mappers.MemberDAO">
+	<select id="joinMember" resultType="com.myspring.bookshop.entity.MemberVO">
+		insert into member(
+			uid, 
+			pwd, 
+			name, 
+			phone, 
+			email, 
+			address1, 
+			address2, 
+			address3
+		)
+		values(
+			#{uid}, 
+			#{pwd}, 
+			#{name}, 
+			#{phone}, 
+			#{email}, 
+			#{address1}, 
+			#{address2}, 
+			#{address3}
+		)
+	</select>
+	
+	<select id="idCheck" resultType="int">
+  		select count(*) from member where uid = #{uid}
+  	</select>
+
+	<select id="selectView" resultType="com.myspring.bookshop.entity.MemberVO">
+		select 
+			uid,
+			pwd,
+			name,
+			sex,
+			address,
+			phone,
+			email,
+			createDate
+		from member
+		where uid = #{uid}
+	</select>
+	
+	
+	<select id="listMembers" resultType="com.myspring.bookshop.entity.MemberVO">
+		select 
+			uid,
+			pwd,
+			name,
+			sex,
+			address,
+			phone,
+			email,
+			createDate
+		from member
+	</select>
+	
+</mapper>
