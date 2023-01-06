@@ -76,6 +76,17 @@
     margin : auto;
 }
 
+/* 아이디&비밀번호 찾기 */
+.login_search_wrap {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.login_search_wrap a{
+	text-decoration:none;
+	color: gray;
+}
+
 /* float 속성 해제 */
 .clearfix{
 	clear: both;
@@ -162,3 +173,11 @@
 .clearfix{
 	clear: both;
 }
+
+/* 로그인 실패시 경고글 */
+.login_warn{
+    margin-top: 30px;
+    text-align: center;
+    color : red;
+}
+

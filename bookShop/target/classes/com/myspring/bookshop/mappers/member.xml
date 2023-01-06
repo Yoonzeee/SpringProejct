@@ -30,33 +30,69 @@
 	<select id="idCheck" resultType="int">
   		select count(*) from member where uid = #{uid}
   	</select>
+  	
+  	<select id="loginMember" resultType="com.myspring.bookshop.entity.MemberVO">
+  		select * 
+  		from member
+  		where uid = #{uid} and pwd = #{pwd}
+  	</select>
+  	
+  	<select id="idSearch" resultType="com.myspring.bookshop.entity.MemberVO">
+  		select uid
+  		from member
+  		where pwd = #{pwd} and email = #{email}
+  	</select>
+  	
+  	<!-- <select id="pwdSearch" resultType="com.myspring.bookshop.entity.MemberVO">
+  		select pwd
+  		from member
+  		where uid = #{uid} and email = #{email}
+  	</select> -->
 
 	<select id="selectView" resultType="com.myspring.bookshop.entity.MemberVO">
 		select 
 			uid,
 			pwd,
 			name,
-			sex,
-			address,
 			phone,
-			email,
-			createDate
+			address1,
+			address2,
+			address3,
+			joinDate,
+			available,
+			admin
 		from member
 		where uid = #{uid}
 	</select>
-	
 	
 	<select id="listMembers" resultType="com.myspring.bookshop.entity.MemberVO">
 		select 
 			uid,
 			pwd,
 			name,
-			sex,
-			address,
 			phone,
 			email,
-			createDate
+			address1,
+			address2,
+			address3,
+			joinDate
 		from member
+	</select>
+	
+	<select id="updateMember" resultType="com.myspring.bookshop.entity.MemberVO">
+		update member
+		set name = #{name},
+			phone = #{phone},
+			email = #{email},
+			address1 = #{address1},
+			address2 = #{address2},
+			address3 = #{address3}
+		where uid = #{uid}
+	</select>
+
+	<select id="deleteMember" parameterType="String" >
+		delete from member
+		where uid = #{uid} and pwd = #{pwd}
 	</select>
 	
 </mapper>

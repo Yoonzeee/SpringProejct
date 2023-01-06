@@ -33,13 +33,13 @@
 			<div class="pwd_wrap">
 				<div class="pwd_name">비밀번호</div>
 				<div class="pwd_input_box">
-					<input class="pwd_input" name="pwd">
+					<input type="password" class="pwd_input" id="pwd" name="pwd">
 				</div>
 			</div>
 			<div class="pwdck_wrap">
 				<div class="pwdck_name">비밀번호 확인</div>
 				<div class="pwdck_input_box">
-					<input class="pwdck_input" name="pwd1">
+					<input type="password" class="pwdck_input" id="pwd1" name="pwd1">
 				</div>
 			</div>
 			<span class="final_pwd_ck">비밀번호를 입력해주세요.</span>
@@ -48,14 +48,14 @@
 			<div class="user_wrap">
 				<div class="user_name">이름</div>
 				<div class="user_input_box">
-					<input class="user_input" name="name">
+					<input class="user_input" id="name" name="name">
 				</div>
 			</div>
 			<span class="final_name_ck">이름을 입력해주세요.</span>
 			<div class="mail_wrap">
 				<div class="mail_name">이메일</div> 
 				<div class="mail_input_box">
-					<input class="mail_input" name="email">
+					<input class="mail_input" id="email" name="email">
 				</div>
 				<div class="mail_check_wrap">
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
@@ -72,7 +72,7 @@
 			<div class="phone_wrap">
 				<div class="phone_name">휴대전화</div>
 				<div class="phone_input_box">
-					<input class="phone_input" name="phone">
+					<input class="phone_input" id="phone" name="phone">
 				</div>
 			</div>
 			<span class="final_phone_ck">휴대전화 번호를 입력해주세요.</span>
@@ -80,7 +80,7 @@
 				<div class="address_name">주소</div>
 				<div class="address_input_1_wrap">
 					<div class="address_input_1_box">
-						<input class="address_input_1" name="address1" readonly="readonly">
+						<input class="address_input_1" id="address1" name="address1" readonly="readonly">
 					</div>
 					<div class="address_button" onclick="execution_daum_address()">
 						<span>주소 찾기</span>
@@ -89,12 +89,12 @@
 				</div>
 				<div class ="address_input_2_wrap">
 					<div class="address_input_2_box">
-						<input class="address_input_2" name="address2" readonly="readonly">
+						<input class="address_input_2" id="address2" name="address2" readonly="readonly">
 					</div>
 				</div>
 				<div class ="address_input_3_wrap">
 					<div class="address_input_3_box">
-						<input class="address_input_3" name="address3" readonly="readonly">
+						<input class="address_input_3" id="address3" name="address3" readonly="readonly">
 					</div>
 				</div>
 			</div>
@@ -110,29 +110,19 @@
 <script>
 var code = ""; // 이메일 전송 인증번호 저장용
 
-/* 유효성 검사 통과유무 변수 */
+// 유효성 검사 통과유무 변수
 var uidCheck = false;            // 아이디
 var uidckCheck = false;            // 아이디 중복 검사
 var pwdCheck = false;            // 비번
 var pwdckCheck = false;            // 비번 확인
 var pwdckcorCheck = false;        // 비번 확인 일치 확인
 var nameCheck = false;            // 이름
-var phoneCheck = false;
 var mailCheck = false;            // 이메일
 var mailnumCheck = false;        // 이메일 인증번호 확인
-var addressCheck = false         // 주소
-
-/* $(document).ready(function(){
-//회원가입 버튼(회원가입 기능 작동)
-$(".join_button").click(function(){
-	$("#join_form").attr("action", "/bookshop/member/join.do");
-	$("#join_form").submit();
-});
-}); */
 
 //회원가입 버튼(회원가입 기능 작동)
 $(".join_button").click(function(){
-	  /* 입력값 변수 */
+	// 입력값 변수
     var uid = $('.uid_input').val();               // id 입력란
     var pwd = $('.pwd_input').val();               // 비밀번호 입력란
     var pwdck = $('.pwdck_input').val();          // 비밀번호 확인 입력란
@@ -141,7 +131,7 @@ $(".join_button").click(function(){
     var email = $('.mail_input').val();  		  // 이메일 입력란
     var address = $('.address_input_3').val();    // 주소 입력란
     
-    /* 아이디 유효성검사 */
+    // 아이디 유효성검사 
    	if(uid == ""){
         $('.final_uid_ck').css('display','block');
         uidCheck = false;
@@ -150,7 +140,7 @@ $(".join_button").click(function(){
         uidCheck = true;
     }
     
-    /* 비밀번호 유효성 검사 */
+    // 비밀번호 유효성 검사
     if(pwd == ""){
         $('.final_pwd_ck').css('display','block');
         pwdCheck = false;
@@ -159,7 +149,7 @@ $(".join_button").click(function(){
         pwdCheck = true;
     }
     
-    /* 비밀번호 확인 유효성 검사 */
+    // 비밀번호 확인 유효성 검사
     if(pwdck == ""){
         $('.final_pwdck_ck').css('display','block');
         pwdckCheck = false;
@@ -168,7 +158,7 @@ $(".join_button").click(function(){
         pwdckCheck = true;
     }
     
-    /* 이메일 유효성 검사 */
+    // 이메일 유효성 검사
     if(email == ""){
         $('.final_mail_ck').css('display','block');
         mailCheck = false;
@@ -177,7 +167,7 @@ $(".join_button").click(function(){
         mailCheck = true;
     }
     
-    /* 최종 유효성 검사 */
+    // 최종 유효성 검사
     if(uidckCheck && pwdckCheck && mailnumCheck){
     	 $("#join_form").attr("action", "/bookshop/member/join.do");
          $("#join_form").submit();  
@@ -190,10 +180,10 @@ $(".join_button").click(function(){
 });
 
 
-//아이디 중복검사
+// 아이디 중복검사
 $('.uid_input').on("propertychange change keyup paste input", function(){
 	var uid = $('.uid_input').val();			// .id_input에 입력되는 값
-	var data = {uid : uid}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+	var data = {uid : uid}						// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
 	
 	$.ajax({
 		type : "post",
@@ -214,7 +204,7 @@ $('.uid_input').on("propertychange change keyup paste input", function(){
 	});
 });
 
-/* 비밀번호 확인 일치 유효성 검사 */
+// 비밀번호 확인 일치 유효성 검사
 $('.pwdck_input').on("propertychange change keyup paste input", function(){
         
 	var pwd = $('.pwd_input').val();
@@ -234,7 +224,7 @@ $('.pwdck_input').on("propertychange change keyup paste input", function(){
  
 
 
-/* 인증번호 이메일 전송 */
+// 인증번호 이메일 전송
 $(".mail_check_button").click(function(){
 	var email = $(".mail_input").val();            // 입력한 이메일
     var cehckBox = $(".mail_check_input");        // 인증번호 입력란
@@ -250,12 +240,11 @@ $(".mail_check_button").click(function(){
         	
         	code = data;
         }
-                
     });
 });
 
 
-/* 인증번호 비교 */
+// 인증번호 비교
 $(".mail_check_input").blur(function(){
 	var inputCode = $(".mail_check_input").val();         // 입력코드    
     var checkResult = $("#mail_check_input_box_warn");    // 비교 결과     
@@ -272,11 +261,11 @@ $(".mail_check_input").blur(function(){
 });
 
 
-/* 다음 주소 연동 */
+// 다음 주소 연동
 function execution_daum_address(){
 	new daum.Postcode({
         oncomplete: function(data) {
-        	 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        	// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var addr = ''; // 주소 변수
             var extraAddr = ''; // 참고항목 변수
 
@@ -308,9 +297,7 @@ function execution_daum_address(){
             	 addr += ' ';
             }
             $(".address_input_1").val(data.zonecode);
-            //$("[name=memberAddr1]").val(data.zonecode);    // 대체가능
             $(".address_input_2").val(addr);
-            //$("[name=memberAddr2]").val(addr);            // 대체가능
             // 커서를 상세주소 필드로 이동한다.
             $(".address_input_3").attr("readonly",false);
             $(".address_input_3").focus();

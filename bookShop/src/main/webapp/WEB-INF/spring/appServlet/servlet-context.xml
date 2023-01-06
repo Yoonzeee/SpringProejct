@@ -20,8 +20,9 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/*/*" location="/resources/" />
-	<resources mapping="/member/resources/*/*" location="/resources/" />
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/member/resources/**" location="/resources/" />
+	<resources mapping="/admin/resources/**" location="/resources/" />
 	
 	
 
@@ -62,5 +63,17 @@
 	</beans:bean> -->
 
 	<context:component-scan base-package="com.myspring.bookshop" />
+	
+	<!-- 인터셉터 적용 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/member/login.do"></mapping>
+            <beans:bean id="loginIntreceptor" class="com.myspring.bookshop.interceptor.LoginInterceptor"></beans:bean>
+        </interceptor>
+        <interceptor>
+            <mapping path="/admin/**"></mapping>
+            <beans:bean id="AdminIntreceptor" class="com.myspring.bookshop.interceptor.AdminInterceptor"></beans:bean>
+        </interceptor>
+    </interceptors>
 
 </beans:beans>

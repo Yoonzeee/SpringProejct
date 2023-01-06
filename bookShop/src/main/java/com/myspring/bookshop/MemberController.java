@@ -3,6 +3,8 @@ package com.myspring.bookshop;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myspring.bookshop.entity.MemberVO;
 import com.myspring.bookshop.service.MemberService;
@@ -29,7 +35,14 @@ public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	//회원가입
+	// 회원가입 페이지 이동
+	@RequestMapping(value = "/join")
+	public void joinGET() {
+		
+		logger.info("회원가입 페이지 진입");
+	}
+	
+	// 회원가입 서비스 진입
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
 	public String joinPOST(MemberVO memberVO) throws Exception{
 			
@@ -38,13 +51,8 @@ public class MemberController {
 		// 회원가입 서비스 실행
 		memberservice.joinMember(memberVO);
 		logger.info("join Service 성공");
-		return "redirect:/main";
+		return "redirect:/login";
 			
-	}
-	@RequestMapping(value = "/join")
-	public void joinGET() {
-		
-		logger.info("회원가입 페이지 진입");
 	}
 	
 	// 아이디 중복 검사
@@ -65,7 +73,7 @@ public class MemberController {
 			
 	}
 	
-	 /* 이메일 인증 */
+	 // 이메일 인증
     @RequestMapping(value="/mailCheck", method=RequestMethod.GET)
     @ResponseBody
     public String mailCheckGET(String email) throws Exception{
@@ -107,12 +115,141 @@ public class MemberController {
         
         return num;
     }
-	
-	//로그인 페이지 이동
-	@RequestMapping(value = "/login")
+    
+    
+    //로그인 페이지 이동
+    @RequestMapping(value = "/login")
 	public void loginGET() {
 		
 		logger.info("로그인 페이지 진입");
+    }
+    
+	// 로그인 서비스 기능
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public String loginPOST(HttpServletRequest request, MemberVO memberVO, RedirectAttributes rttr) throws Exception {
+    	logger.info("로그인 서비스 진입");
+    	
+    	HttpSession session = request.getSession();
+		MemberVO vo = memberservice.loginMember(memberVO);
+		
+		if(vo == null) {
+            int result = 0;
+            rttr.addFlashAttribute("result", result);
+            
+            logger.info("login Service 성공");
+            return "redirect:/member/login";
+		}
+		session.setAttribute("member", vo);
+		return "redirect:/main";
 	}
-	
+    
+    
+    // 로그아웃 기능
+    @RequestMapping(value = "/logout.do", method = RequestMethod.POST)
+	public String logoutMainPOST(HttpServletRequest request) throws Exception {
+    	logger.info("로그아웃 서비스 진입");
+    	
+    	HttpSession session = request.getSession();
+    	session.invalidate();
+    	
+		return "redirect:/main";
+	}
+     
+    
+    // 마이페이지 페이지?
+    @RequestMapping(value = "/view")
+	public void myPageGET() {
+		
+		logger.info("마이페이지 진입");
+    }
+    
+    // 마이페이지 서비스 기능
+    @RequestMapping(value = "/member/view.do", method = RequestMethod.POST)
+	public String viewPost(@RequestParam(value="uid", required = true) String uid, Model model){
+    	logger.info("authorDetail......." + uid);
+    	
+    	model.addAttribute("member", memberservice.view(uid));
+		
+		return "/member/view";
+	}
+    
+    
+    // 회원정보수정 페이지 이동
+ 	@RequestMapping(value = "/update", method=RequestMethod.GET)
+ 	public void updateGET() {
+ 		
+ 		logger.info("회원정보수정 페이지 진입");
+ 	}
+ 	
+ 	// 회원정보수정 서비스 진입
+ 	@RequestMapping(value="/update.do", method=RequestMethod.POST)
+ 	public String updatePOST(MemberVO memberVO, HttpServletRequest request) throws Exception{
+ 			
+ 		logger.info("update 진입");
+ 		
+ 		// 회원정보수정 서비스 실행
+ 		memberservice.updateMember(memberVO);
+ 		
+ 		HttpSession session = request.getSession();
+ 		session.setAttribute("member", memberVO);
+ 		
+ 		logger.info("update Service 성공");
+ 		
+ 		
+ 		return "redirect:/member/view";
+ 	}
+    
+    // 회원탈퇴 페이지 이동
+ 	@RequestMapping(value = "/delete", method=RequestMethod.GET)
+ 	public void deleteGET() {
+ 		
+ 		logger.info("회원정보수정 페이지 진입");
+ 	}
+ 	
+ 	// 회원탈퇴 서비스 진입
+ 	@RequestMapping(value="/delete.do", method=RequestMethod.POST)
+ 	public String deletePOST(String uid, String pwd, HttpServletRequest request) throws Exception{
+ 			
+ 		logger.info("delete 진입");
+ 		
+ 		// 회원가입 서비스 실행
+ 		memberservice.deleteMember(uid, pwd);
+ 		
+ 		HttpSession session = request.getSession();
+ 		session.invalidate();
+ 		
+ 		logger.info("delete Service 성공");
+ 	
+ 		return "redirect:/main";
+ 	}
+    
+    
+    
+
+    // 아이디 찾기 페이지 이동
+    @RequestMapping(value = "/idSearch")
+	public void idSearchGET() {
+		
+		logger.info("아이디 찾기 페이지 진입");
+    }
+    
+    // 아이디 찾기 서비스 기능
+    @RequestMapping(value = "/idSearch.do", method = RequestMethod.POST)
+	public String idSearchPOST(HttpServletRequest request, MemberVO memberVO, RedirectAttributes rttr) throws Exception {
+    	logger.info("아이디 찾기 서비스 진입");
+    	
+    	HttpSession session = request.getSession();
+		MemberVO vo = memberservice.loginMember(memberVO);
+		
+		if(vo == null) {
+            int result = 0;
+            rttr.addFlashAttribute("result", result);
+            
+            logger.info("login Service 성공");
+            return "redirect:/member/login";
+		}
+		session.setAttribute("member", vo);
+		return "redirect:/main";
+	}
+   
 }
