@@ -33,6 +33,8 @@ public interface MemberDAO {
 	public void deleteMember(@Param("uid")String uid, @Param("pwd") String pwd);
 	
 	
+	
+	
 	// 아이디 찾기
 	public MemberVO idSearch(MemberVO memberVO);
 	

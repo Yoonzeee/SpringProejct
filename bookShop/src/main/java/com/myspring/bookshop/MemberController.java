@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myspring.bookshop.entity.MemberVO;
@@ -51,7 +50,7 @@ public class MemberController {
 		// 회원가입 서비스 실행
 		memberservice.joinMember(memberVO);
 		logger.info("join Service 성공");
-		return "redirect:/login";
+		return "redirect:/member/login";
 			
 	}
 	
@@ -203,7 +202,7 @@ public class MemberController {
  	@RequestMapping(value = "/delete", method=RequestMethod.GET)
  	public void deleteGET() {
  		
- 		logger.info("회원정보수정 페이지 진입");
+ 		logger.info("회원탈퇴 페이지 진입");
  	}
  	
  	// 회원탈퇴 서비스 진입

@@ -136,6 +136,17 @@
 	</div>
 </div>
 
-
+<script>
+$("#gnb_logout_button").click(function() {
+	$.ajax({
+		type : "post",
+		url : "/bookshop/member/logout.do",
+		success : function(result){
+			alert("로그아웃 성공");
+			document.location.reload();
+		}
+	});
+});
+</script>
 </body>
 </html>

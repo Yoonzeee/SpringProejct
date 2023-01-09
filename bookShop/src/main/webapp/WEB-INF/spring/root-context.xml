@@ -20,14 +20,14 @@
 	</bean>
 		
 	<!-- SessionFactory에 dataSourde, Bean 객체의 별명 설정, xml 파일의 위치 설정 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource" />
 		<property name="typeAliasesPackage" value="com.myspring.bookshop.entity" />
-		<property name="mapperLocations" value="classpath:com/myspring/bookshop/mappers/**/*.xml" />
-	</bean>
+		<property name="mapperLocations" value="classpath:src/main/java/com/myspring/bookshop/mappers/*.xml" />
+	</bean> -->
 	
 	<!-- SqlSesionTemplate 클래스 설정  --> 
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 	    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
@@ -38,14 +38,30 @@
 
 	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-    </bean>	
+    </bean>	 -->
+    
+    <bean id ="sqlSessionFactory" class= "org.mybatis.spring.SqlSessionFactoryBean" >
+	    <property name="dataSource" ref="dataSource" />
+	  <property name="mapperLocations" value="classpath*:com/myspring/bookshop/mappers/**/*.xml" />
+	</bean >
+	
+	<bean id ="transactionManager"
+	    class= "org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+	    <property name ="dataSource" ref= "dataSource"></property >
+	</bean >
+	
+	<bean id ="sqlSession"
+	    class= "org.mybatis.spring.SqlSessionTemplate" >
+	    <constructor-arg ref= "sqlSessionFactory"></constructor-arg >
+	</bean >
     
     <!-- naver mail설정 -->
+    
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
-     <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+     <property name="host" value="smtp.gmail.com"/> <!-- 메이서버 호스트 -->
      <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
-     <property name="username" value="dbswlehowl@naver.com"/> <!-- 자신의 이메일 아이디 -->
-     <property name="password" value="when!betherich"/> <!-- 자신의 비밀번호 -->
+     <property name="username" value="rhshfo8282@gmail.com"/> <!-- 자신의 이메일 아이디 -->
+     <property name="password" value="kkvwaedcekbegqoy"/> <!-- 자신의 비밀번호 -->
        <!-- 보안연결 SSL과 관련된 설정 -->
      <property name="javaMailProperties">
       <props>

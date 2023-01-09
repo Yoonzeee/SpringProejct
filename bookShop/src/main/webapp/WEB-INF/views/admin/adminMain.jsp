@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-</head>
+
 </head>
 <body>
  
@@ -36,19 +38,10 @@
                 <div class="admin_navi_wrap">
                     <ul>
                    		<lI>
-                            <a class="admin_list_01" href="/bookshop/admin/listMembers">회원 목록</a>                        
+                            <a class="admin_list_01" href="/bookshop/admin/listMembers">회원 관리</a>                        
                         </lI> 
                         <lI>
-                            <a class="admin_list_02">회원 관리</a>                            
-                        </lI>  
-                        <li >
-                            <a class="admin_list_03">상품 등록</a>
-                        </li>
-                        <li>
-                            <a class="admin_list_04">상품 목록</a>
-                        </li>
-                        <lI>
-                            <a class="admin_list_05">상품 관리</a>                            
+                            <a class="admin_list_05" href="/bookshop/admin/listGoods">상품 관리</a>                            
                         </lI>                                                                                             
                     </ul>
 <!-- 
@@ -61,6 +54,7 @@
                     <div>관리자 페이지 입니다.</div>
                 </div>
                 <div class="clearfix"></div>
+                ??
             </div>
         </div>
     </div>
@@ -68,7 +62,7 @@
 </body>
 
 <script>
-$(".gnb_logout_button2").click(function() {
+$("#gnb_logout_button2").click(function() {
 	$.ajax({
 		type : "post",
 		url : "/bookshop/member/logout.do",
@@ -79,4 +73,5 @@ $(".gnb_logout_button2").click(function() {
 	});
 });
 </script>
+
 </html>

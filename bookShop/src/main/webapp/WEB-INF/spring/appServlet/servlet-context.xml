@@ -24,6 +24,23 @@
 	<resources mapping="/member/resources/**" location="/resources/" />
 	<resources mapping="/admin/resources/**" location="/resources/" />
 	
+	<!-- 타일즈 기능 설정 -->
+<!-- 	<beans:bean id="tilesConfigurer"
+					class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>classpath:tiles/*.xml</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="preparerFactoryClass"
+						value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory"/>
+	</beans:bean>
+	<beans:bean id="viewResolver"
+				class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+						value="org.springframework.web.servlet.view.tiles2.TilesView"/>			
+	</beans:bean> -->
+	
 	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -54,13 +71,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<!-- 멀티파트 리졸버 -->
-	<!-- <beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="52428800" />
-		<beans:property name="maxInMemorySize" value="1000000" />
-		<beans:property name="defaultEncoding" value="utf-8" />
-	</beans:bean> -->
 
 	<context:component-scan base-package="com.myspring.bookshop" />
 	
@@ -75,5 +85,14 @@
             <beans:bean id="AdminIntreceptor" class="com.myspring.bookshop.interceptor.AdminInterceptor"></beans:bean>
         </interceptor>
     </interceptors>
+    
+    
+	<!-- 멀티파트 리졸버 -->
+<!-- 	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800" />
+		<beans:property name="maxInMemorySize" value="1000000" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean> -->
 
 </beans:beans>

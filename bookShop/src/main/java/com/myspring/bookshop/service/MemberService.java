@@ -50,6 +50,7 @@ public class MemberService {
 		memberDAO.updateMember(memberVO);
 	}
 
+	// 회원탈퇴
 	public void deleteMember(String uid, String pwd) {
 		memberDAO.deleteMember(uid, pwd);
 		

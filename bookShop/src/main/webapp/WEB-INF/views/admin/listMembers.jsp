@@ -21,7 +21,7 @@
             <div class="top_gnb_area">
                 <ul class="list">    
                     <li><a href="/bookshop/main">메인 페이지</a></li>
-                    <li><a id="gnb_logout_button1">로그아웃</a></li>
+                    <li><a id="gnb_logout_button">로그아웃</a></li>
                     <li>고객센터</li>            
                 </ul>
             </div>
@@ -33,32 +33,19 @@
             <!-- contents-area -->
             <div class="admin_wrap">
                 <!-- 네비영역 -->
-                <div class="admin_navi_wrap">
+                <div class="admin_navi_wrap" style="float:left;">
                     <ul>
-                        <li >
-                            <a class="admin_list_01">상품 등록</a>
-                        </li>
-                        <li>
-                            <a class="admin_list_02">상품 목록</a>
-                        </li>
-                       <lI>
-                            <a class="admin_list_03" href="/bookshop/admin/listMembers">회원 목록</a>                        
-                        </lI> 
-<!--                         <lI>
-                            <a class="admin_list_04">작가 관리</a>                            
-                        </lI> -->
+                   		<lI>
+                            <a class="admin_list_01" href="/bookshop/admin/listMembers">회원 관리</a>                                                 
+                        </lI>
                         <lI>
-                            <a class="admin_list_05">회원 관리</a>                            
+                            <a class="admin_list_05" href="/bookshop/admin/listGoods">상품 관리</a>                            
                         </lI>                                                                                             
                     </ul>
-<!-- 
-                    <div class="admin_list_01">
-                        <a>상품 관리</a>
-                    </div>
-                     -->
+
                 </div>
-                <div class="admin_content_wrap">
-                    <table>
+                <div class="goods_table_wrap" style="float:right;">
+	                    	<table class="goods_table">
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -87,10 +74,10 @@
 									<td>${item.address2}</td>
 									<td>${item.address3}</td>
 									<td>${item.joinDate}</td>
-									<c:if test="${memberBean.available eq 1}">
+									<c:if test="${item.available eq 1}">
 										<td>로그인 가능</td>
 									</c:if>
-									<c:if test="${memberBean.available eq 0}">
+									<c:if test="${item.available eq 0}">
 										<td>로그인 불가능</td>
 									</c:if>
 									<td><a href="/MyProject/member/adminDelete?uid=${item.uid}">탈퇴</a></td>
@@ -108,7 +95,7 @@
 </body>
 
 <script>
-$("#gnb_logout_button1").click(function() {
+$("#gnb_logout_button").click(function() {
 	$.ajax({
 		type : "post",
 		url : "/bookshop/member/logout.do",
@@ -117,6 +104,39 @@ $("#gnb_logout_button1").click(function() {
 			document.location.reload();
 		}
 	});
+});
+
+
+let searchForm = $('#searchForm');
+let moveForm = $('#moveForm');
+
+/* 작거 검색 버튼 동작 */
+$("#searchForm button").on("click", function(e){
+	
+	e.preventDefault();
+	
+	/* 검색 키워드 유효성 검사 */
+	if(!searchForm.find("input[name='keyword']").val()){
+		alert("키워드를 입력하십시오");
+		return false;
+	}
+	
+	searchForm.find("input[name='pageNum']").val("1");
+	
+	searchForm.submit();
+	
+});
+
+
+/* 페이지 이동 버튼 */
+$(".pageMaker_btn a").on("click", function(e){
+	
+	e.preventDefault();
+	
+	moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+	
+	moveForm.submit();
+	
 });
 </script> 
 
