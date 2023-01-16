@@ -14,7 +14,7 @@ a{
 }
 /* content 랩 */
 .wrap{
-	width : 1080px;
+	width : 100%;
 	margin: auto;
 }
 /* 홈페이지 기능 네비 */ 
@@ -52,17 +52,22 @@ a{
 }
 /* 로고 영역 */
 .logo_area{
-	width: 25%;
-	height: 100%;
-/* 	background-color: red; */
-	float:left;
+    width: 15%;
+    height: 100%;
+    float:left;
 }
+.logo_area img{
+    width: 100%;
+    height: 100%;
+}
+
+
 /* 검색 박스 영역 */
 .search_area{
-	width: 50%;
+	width: 60%;
 	height: 100%;
 	text-align: center;
-	background-color: yellow;
+	/* background-color: yellow; */
 	float:left;	
 }
 /* 로그인 버튼 영역 */
@@ -131,11 +136,109 @@ a{
 /* 홈페이지 메인 제품 목록  */
 .content_area{
 	width: 100%;
-    background-color: #97ef97;
+/*     background-color: #97ef97; */
     height: 1000px;
 }
 
 /* float 속성 해제 */
 .clearfix{
 	clear: both;
+}
+
+/* footer navai 영역 */
+.footer_nav{
+    width:100%;
+    height:50px;
+}
+.footer_nav_container{
+    width: 100%;
+    height: 100%;
+    background-color:#8EC0E4;
+}
+.footer_nav_container>ul{
+    font-weight : bold;
+    float:left;
+    list-style:none;
+    position:relative;
+    padding-top:10px;
+    line-height: 27px;
+    font-family: dotum;
+    margin-left: 10px;
+}
+.footer_nav_container>ul>li{
+    display:inline;
+    width: 45px;
+    height: 19px;
+    padding: 10px 9px 0 10px;
+}
+.footer_nav_container>ul>span{
+    margin: 0 4px;
+}
+/* footer 영역 */
+.footer{
+    width:100%;
+    height:130px;
+    background-color:#D4DFE6;
+    padding-bottom : 50px;
+}
+.footer_container{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+.footer_left>img {
+    width: 150%;
+    height: 130px;
+    margin-left: -20px;
+    margin-top: -12px;
+}
+.footer_left{
+    float :left;
+    width: 170px;
+    margin-left: 20px;
+    margin-top : 30px;
+    
+}
+.footer_right{
+    float :left;
+    width: 680px;
+    margin-left: 70px;
+    margin-top : 30px;
+}    
+
+
+
+.search_wrap{
+	width: 100%;
+    height: 100%;
+}
+#searchForm{
+	width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_input{
+    display: flex;
+    height: 30%;
+    width: 80%;	
+}
+.search_input select{
+	width: 20%;
+    text-align: center;
+    font-size: 15px;	
+}
+.search_input input{
+    margin-left: 10px;
+    width: 57%;	
+    font-size: 18px;
+    padding-left: 2%;
+}
+.search_btn{
+	margin-left: 10px;
+    width: 17%;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 600;	
 }

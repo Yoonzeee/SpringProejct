@@ -14,10 +14,12 @@ public class AdminInterceptor implements HandlerInterceptor{
 	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+		
+		
 		HttpSession session = request.getSession();
 	        
 	    MemberVO vo = (MemberVO)session.getAttribute("member");
-        
+        System.out.println("AdminInterceptor.preHandle()->" + request.getRequestURI());
         // 
 	    if (vo == null || vo.getAdmin() == 0) {
 	    	response.sendRedirect("/bookshop/main");

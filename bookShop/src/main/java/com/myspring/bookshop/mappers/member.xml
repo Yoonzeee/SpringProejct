@@ -6,25 +6,25 @@
 <mapper namespace="com.myspring.bookshop.mappers.MemberDAO">
 	<select id="joinMember" resultType="com.myspring.bookshop.entity.MemberVO">
 		insert into member(
-			uid, 
-			pwd, 
-			name, 
-			phone, 
-			email, 
-			address1, 
-			address2, 
-			address3
-		)
+							uid, 
+							pwd, 
+							name, 
+							phone, 
+							email, 
+							address1, 
+							address2, 
+							address3
+							)
 		values(
-			#{uid}, 
-			#{pwd}, 
-			#{name}, 
-			#{phone}, 
-			#{email}, 
-			#{address1}, 
-			#{address2}, 
-			#{address3}
-		)
+				#{uid}, 
+				#{pwd}, 
+				#{name}, 
+				#{phone}, 
+				#{email}, 
+				#{address1}, 
+				#{address2}, 
+				#{address3}
+				)
 	</select>
 	
 	<select id="idCheck" resultType="int">
@@ -37,11 +37,11 @@
   		where uid = #{uid} and pwd = #{pwd}
   	</select>
   	
-  	<select id="idSearch" resultType="com.myspring.bookshop.entity.MemberVO">
+  <!-- 	<select id="idSearch" resultType="com.myspring.bookshop.entity.MemberVO">
   		select uid
   		from member
   		where pwd = #{pwd} and email = #{email}
-  	</select>
+  	</select> -->
   	
   	<!-- <select id="pwdSearch" resultType="com.myspring.bookshop.entity.MemberVO">
   		select pwd
@@ -77,6 +77,24 @@
 			address3,
 			joinDate
 		from member
+		
+		<!-- select  
+			uid,
+			pwd,
+			name,
+			phone,
+			email,
+			address1,
+			address2,
+			address3,
+			joinDate
+        from member 
+        <if test="keyword != null">
+            where uid like concat('%',#{uid}, '%')
+        </if>
+        order by joinDate desc 
+        limit #{skip}, #{amount}  -->  
+		
 	</select>
 	
 	<select id="updateMember" resultType="com.myspring.bookshop.entity.MemberVO">
@@ -94,5 +112,50 @@
 		delete from member
 		where uid = #{uid} and pwd = #{pwd}
 	</select>
+	
+	<!-- 장바구니 등록 -->
+	<insert id="cartEnroll">
+
+		insert into cart(
+						uid,
+						bookId,
+						bookName,
+						authorName,
+						publisher,
+						bookPrice,
+						bookDiscount
+						) 
+				 values(
+						#{uid},
+						#{bookId},
+						#{bookName},
+						#{authorName},
+						#{publisher},
+						#{bookPrice},
+						#{bookDiscount}
+						)
+
+	</insert>
+	
+	<!-- 장바구니 목록 보기 -->
+	<select id="cartList" resultType="com.myspring.bookshop.entity.CartVO">
+		select 
+				bookId,
+				bookName,
+				authorName,
+				publisher,
+				bookPrice,
+				bookDiscount
+		from 	cart
+		where 	uid = #{uid}
+	</select>
+	
+	<select id="findIdByPhone" resultType="string">
+      
+	  select uid 
+	  from 	 member 
+	  where  name = #{name} and phone = #{phone}
+	      
+	 </select>   
 	
 </mapper>

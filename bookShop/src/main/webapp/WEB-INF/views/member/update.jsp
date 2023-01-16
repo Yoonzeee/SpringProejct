@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보수정</title>
-<link rel="stylesheet" href="resources/css/main.css">
+<link rel="stylesheet" href="resources/css/join.css">
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -15,61 +15,9 @@
 </head>
 <body>
 
-<div class="wrapper">
-	<div class="wrap">
-		<div class="top_gnb_area">
-			<ul class="list">
-				<c:if test = "${member == null}">		<!-- 로그인 X -->
- 					<li >
-                    	<a href="/bookshop/member/login">로그인</a>
-                	</li>
-                	<li>
-                    	<a href="/bookshop/member/join">회원가입</a>
-               	 	</li>
-    			</c:if>
-    			<c:if test="${member != null}">       <!-- 로그인 O -->          
-    				<c:if test="${member.admin == 1 }">
-                        <li><a href="/bookshop/admin/main">관리자 페이지</a></li>
-                    </c:if>   
-                    <li><a id="gnb_logout_button">로그아웃</a></li>
-                    <li>
-                        <a href="/bookshop/member/view">마이페이지</a>
-                    </li>
-                    <li>
-                        찜하기
-                    </li>
-                </c:if>
-            </ul> 
-		</div>
-		<div class="top_area">
-			<div class="logo_area">
-				<h1>logo area</h1>
-			</div>
-			<div class="search_area">
-				<h1>Search area</h1>
-			</div>
-			<div class="login_area">
-				
-				 <!-- 로그인 하지 않은 상태 -->
-                <c:if test = "${member == null }">
-                    <div class="login_button"><a href="/bookshop/member/login">로그인</a></div>
-                    <span><a href="/bookshop/member/join">회원가입</a></span>                
-                </c:if>   
-                
-                <!-- 로그인한 상태 -->
-                <c:if test="${ member != null }">
-                    <div class="login_success_area">
-                    	</br>
-                        <span>아이디 : ${member.uid}</span>
-                        <span>이름 : ${member.name}</span>
-                    </div>
-                </c:if>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-		<div class="navi_bar_area">
-			<h1>navi area</h1>
-		</div>
+<!-- header -->
+		<%@include file="../includes/main/header.jsp"%> 
+		
 		<div class="content_area">
 			<div class="wrapper">
 				<form id="update_form" method="post">
@@ -77,7 +25,7 @@
 						<div class="subjecet">
 							<span>회원정보 수정</span>
 						</div>
-						아이디: <input type="hidden" value="${member.uid}" id="uid" name="uid"><br>
+						 <input type="hidden" value="${member.uid}" id="uid" name="uid"><br>
 						<div class="user_wrap">
 							<div class="user_name">이름</div>
 							<div class="user_input_box">
@@ -130,8 +78,9 @@
 				</form>
 			</div>
 		</div>
-	</div>
-</div>
+		
+		<!-- footer -->
+		<%@include file="../includes/admin/footer.jsp"%>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

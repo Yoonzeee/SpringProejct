@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%request.setCharacterEncoding("UTF-8"); %>
-<% response.setContentType("text/html; charset=UTF-8"); %>
+<%response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +29,6 @@
 				<span class="uid_input_re_1">사용 가능한 아이디입니다.</span>
 				<span class="uid_input_re_2">아이디가 이미 존재합니다.</span>
 			</div>
-			<span class="final_uid_ck">아이디를 입력해주세요.</span>
 			<div class="pwd_wrap">
 				<div class="pwd_name">비밀번호</div>
 				<div class="pwd_input_box">
@@ -42,7 +41,6 @@
 					<input type="password" class="pwdck_input" id="pwd1" name="pwd1">
 				</div>
 			</div>
-			<span class="final_pwd_ck">비밀번호를 입력해주세요.</span>
 			<span class="pwdck_input_re_1">비밀번호가 일치합니다.</span>
             <span class="pwdck_input_re_2">비밀번호가 일치하지 않습니다.</span>
 			<div class="user_wrap">
@@ -51,7 +49,6 @@
 					<input class="user_input" id="name" name="name">
 				</div>
 			</div>
-			<span class="final_name_ck">이름을 입력해주세요.</span>
 			<div class="mail_wrap">
 				<div class="mail_name">이메일</div> 
 				<div class="mail_input_box">
@@ -68,14 +65,12 @@
 					<span id="mail_check_input_box_warn"></span>
 				</div>
 			</div>
-			<span class="final_mail_ck">이메일을 입력해주세요.</span>
 			<div class="phone_wrap">
 				<div class="phone_name">휴대전화</div>
 				<div class="phone_input_box">
 					<input class="phone_input" id="phone" name="phone">
 				</div>
 			</div>
-			<span class="final_phone_ck">휴대전화 번호를 입력해주세요.</span>
 			<div class="address_wrap">
 				<div class="address_name">주소</div>
 				<div class="address_input_1_wrap">
@@ -98,7 +93,6 @@
 					</div>
 				</div>
 			</div>
-			<span class="final_address_ck">주소를 입력해주세요.</span>
 			<div class="join_button_wrap">
 				<input type="button" class="join_button" value="가입하기">
 			</div>
@@ -168,7 +162,7 @@ $(".join_button").click(function(){
     }
     
     // 최종 유효성 검사
-    if(uidckCheck && pwdckCheck && mailnumCheck){
+    if(uidckCheck && pwdckCheck && mailnumCheck && uidCheck ){
     	 $("#join_form").attr("action", "/bookshop/member/join.do");
          $("#join_form").submit();  
     } else {

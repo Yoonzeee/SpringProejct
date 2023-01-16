@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.myspring.bookshop.entity.CartVO;
 import com.myspring.bookshop.entity.MemberVO;
+import com.myspring.bookshop.mappers.AdminDAO;
 import com.myspring.bookshop.mappers.MemberDAO;
 
 @Service
@@ -31,9 +33,13 @@ public class MemberService {
 	};
 	
 	// 아이디 찾기
-	public MemberVO idSearch(MemberVO memberVO) {
-		return memberDAO.idSearch(memberVO);
+//	public MemberVO idSearch(MemberVO memberVO) {
+//		return memberDAO.idSearch(memberVO);
+//	}
+	public String findIdByPhone(String name, String phone) throws Exception {
+		return memberDAO.findIdByPhone(name, phone);
 	}
+	
 
 	// 마이페이지
 	public Object view(String uid) {
@@ -53,8 +59,17 @@ public class MemberService {
 	// 회원탈퇴
 	public void deleteMember(String uid, String pwd) {
 		memberDAO.deleteMember(uid, pwd);
-		
 	}
+	
+	// 장바구니 등록
+	public void cartEnroll(CartVO cartVO) {
+		memberDAO.cartEnroll(cartVO);
+	}
+
+	public List<CartVO> cartList(String uid) {
+		return memberDAO.cartList(uid);
+	}
+
 	
 	// 비밀번호 찾기
 }

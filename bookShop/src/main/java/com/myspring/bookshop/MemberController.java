@@ -1,9 +1,11 @@
 package com.myspring.bookshop;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,22 +19,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.myspring.bookshop.entity.CartVO;
 import com.myspring.bookshop.entity.MemberVO;
 import com.myspring.bookshop.service.MemberService;
 
 @Controller
 @RequestMapping(value = "/member")
-public class MemberController {
+public class MemberController {	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private MemberService memberservice;
-	
 	@Autowired
     private JavaMailSender mailSender;
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	
+	
+	
+	
+	
 	
 	// 회원가입 페이지 이동
 	@RequestMapping(value = "/join")
@@ -87,9 +96,9 @@ public class MemberController {
         logger.info("인증번호 확인 : " + checkNum);
         
         /* 이메일 보내기 */
-        String setFrom = "dbswlehowl@naver.com";
+        String setFrom = "[BookShop]dbswlehowl@naver.com";
         String toMail = email;
-        String title = "회원가입 인증 이메일 입니다.";
+        String title = "📨회원가입 인증 이메일 입니다.";
         String content = 
                 "홈페이지를 방문해주셔서 감사합니다." +
                 "<br><br>" + 
@@ -163,15 +172,30 @@ public class MemberController {
     }
     
     // 마이페이지 서비스 기능
-    @RequestMapping(value = "/member/view.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/view.do", method = RequestMethod.POST)
 	public String viewPost(@RequestParam(value="uid", required = true) String uid, Model model){
     	logger.info("authorDetail......." + uid);
     	
     	model.addAttribute("member", memberservice.view(uid));
 		
-		return "/member/view";
+		return "redirect:/member/view";
 	}
     
+    // 장바구니 페이지
+    @RequestMapping(value = "/cartList", method = RequestMethod.GET)
+	public void cartListGET(){
+		logger.info("장바구니 페이지 진입");
+    }
+    
+    // 장바구니 서비스 기능
+    @RequestMapping(value = "/cartList.do", method = RequestMethod.POST)
+	public String cartListPost(@RequestParam(value="uid", required = true) String uid, Model model){
+    	logger.info("cartList.do......." + uid);
+    	
+    	model.addAttribute("cartList", memberservice.cartList(uid));
+		
+		return "redirect:/member/view";
+	}
     
     // 회원정보수정 페이지 이동
  	@RequestMapping(value = "/update", method=RequestMethod.GET)
@@ -222,7 +246,49 @@ public class MemberController {
  		return "redirect:/main";
  	}
     
-    
+ 	// 장바구니
+ 	@RequestMapping(value="/cart", method = RequestMethod.POST)
+ 	public String cartPOST(CartVO cartVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+ 			
+ 		logger.info("장바구니 진입");
+ 			
+ 		memberservice.cartEnroll(cartVO);
+ 			
+ 		return "redirect:/admin/goodsManage";
+ 			
+ 	}
+ 	
+ 	
+ 	
+ 	
+ 	// 아이디 찾기
+ 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	@ResponseBody
+	public String findId(HttpServletRequest request, String name, String email) throws Exception {
+		logger.info("아이디 찾기 페이지 진입");
+		String uid = memberservice.findIdByPhone(name, email);
+		
+		HttpSession session = request.getSession();
+ 		session.setAttribute("findId", uid);
+		
+ 		logger.info("아이디찾기: " + uid);
+ 		
+		return uid;
+
+	}
+ 	
+ 	
+ 	
+ 	
+ // 이메일 인증
+    @RequestMapping(value="/findIdMailCheck", method=RequestMethod.GET)
+    @ResponseBody
+    public String findIdMailCheckGET(String name, String email) throws Exception{
+    	logger.info("아이디 찾기 페이지 진입");
+    	String userid = memberservice.findIdByPhone(name, email);
+    	return userid;
+    }
+ 	
     
 
     // 아이디 찾기 페이지 이동

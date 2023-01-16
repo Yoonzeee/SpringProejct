@@ -43,7 +43,7 @@
 		</div>
 		
 		<div class="login_search_wrap">
-			<a href="/bookshop/member/idSearch">아이디 찾기</a>
+			<a href="/bookshop/member/idSearchForm">아이디 찾기</a>
 			<a>    |    </a>
 			<a href="/bookshop/member/pwdSearch">비밀번호 찾기</a>
 		</div>

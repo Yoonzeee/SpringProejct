@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.annotation.Configuration;
 
+import com.myspring.bookshop.entity.CartVO;
 import com.myspring.bookshop.entity.MemberVO;
 
 @Configuration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -32,11 +33,15 @@ public interface MemberDAO {
 	// 회원탈퇴
 	public void deleteMember(@Param("uid")String uid, @Param("pwd") String pwd);
 	
-	
+	// 장바구니 등록
+	public void cartEnroll(CartVO cartVO);
 	
 	
 	// 아이디 찾기
-	public MemberVO idSearch(MemberVO memberVO);
+	public String findIdByPhone(@Param("name") String name, @Param("phone") String phone);
+
+	// 장바구니 목록
+	public List<CartVO> cartList(String uid);
 	
 
 	
